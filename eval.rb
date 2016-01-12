@@ -10,7 +10,7 @@ parser = Lang::Parser.new(expression)
 ast = parser.parse
 puts "-"*10
 puts "Detected Variables:"
-vars = parser.variables
+vars = parser.variables.sort
 puts " #{vars}"
 puts "-"*10
 
