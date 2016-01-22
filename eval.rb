@@ -6,9 +6,6 @@ require_relative 'parser'
 require_relative 'context'
 
 expressions = STDIN.readlines
-puts expressions
-parsers = expressions.map { |expr| Lang::Parser.new(expr) }
-asts = parsers.map { |parser| parser.parse }
 data = expressions.map do |expr|
   parser = Lang::Parser.new(expr)
   ast = parser.parse
@@ -30,7 +27,7 @@ end
 #generate table header
 
 data.each do |datum|
-  5.times { puts } 
+  2.times { puts } 
 
   vars, ast, expr = datum
 
