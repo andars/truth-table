@@ -50,17 +50,6 @@ expressions.each do |expr|
   outputs << output
 end
 
-equal = true
-
-expressions[0][0].length.times do |i|
-  first = outputs[0][i]
-  outputs.each do |o|
-    if o[i] != first
-      equal = false
-      break
-    end
-  end
-end
-
+equal = outputs.uniq.length == 1
 
 puts "The expressions are #{equal ? "" : "not "}equal" if expressions.length > 1
