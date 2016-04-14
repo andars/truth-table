@@ -5,36 +5,33 @@ require_relative 'lexer'
 require_relative 'parser'
 require_relative 'context'
 
-expressions = STDIN.readlines
-data = expressions.map do |expr|
+input = STDIN.readlines
+expressions = input.map do |expr|
   parser = Lang::Parser.new(expr)
   ast = parser.parse
   [parser.variables.sort, ast, expr]
 end
-puts "-"*10
-puts "Detected Variables:"
-data.each do |datum|
-  puts " #{datum[0]}"
-end
 
-puts "-"*10
-
+puts
 
 def indented(str)
-  puts str
+  puts "  " + str
 end
 
 outputs = []
 
-data.each do |datum|
-  2.times { puts } 
+expressions.each do |expr|
+  puts
 
-  vars, ast, expr = datum
+  vars, ast, expr_text = expr
   output = []
+
+  puts "f(#{vars.join(', ')}):"
+  puts
 
   #generate table header
 
-  header = vars.join(' ') + " | " + expr 
+  header = vars.join(' ') + " | " + expr_text 
   indented header
   indented "-"*10
 
@@ -55,7 +52,7 @@ end
 
 equal = true
 
-data[0][0].length.times do |i|
+expressions[0][0].length.times do |i|
   first = outputs[0][i]
   outputs.each do |o|
     if o[i] != first
