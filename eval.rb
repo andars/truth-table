@@ -24,12 +24,15 @@ def indented(str)
   puts str
 end
 
-#generate table header
+outputs = []
 
 data.each do |datum|
   2.times { puts } 
 
   vars, ast, expr = datum
+  output = []
+
+  #generate table header
 
   header = vars.join(' ') + " | " + expr 
   indented header
@@ -43,7 +46,24 @@ data.each do |datum|
       ctx.set(vars[j].to_sym, i%2)
       i = i/2
     end
+    output << ast.eval(ctx)
     row += " | " + ast.eval(ctx).to_s
     indented row
   end
+  outputs << output
 end
+
+equal = true
+
+data[0][0].length.times do |i|
+  first = outputs[0][i]
+  outputs.each do |o|
+    if o[i] != first
+      equal = false
+      break
+    end
+  end
+end
+
+
+puts "The expressions are #{equal ? "" : "not "}equal" if expressions.length > 1
